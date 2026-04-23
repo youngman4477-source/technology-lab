@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technology Lab - Ideas</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/lang.js"></script>
+  <script src="assets/posts.js"></script>
+</head>
+<body onload="applyCommonLang(); applyPostsLang();">
+  <header>
+    <div class="container header-wrap">
+      <div class="brand"><div class="brand-badge">TL</div><div><div class="brand-title">Technology Lab</div><div class="brand-subtitle" id="brandSub">منصة للأفكار والبرامج والمنتجات</div></div></div>
+      <nav>
+        <a href="index.html" id="navHome">الرئيسية</a>
+        <a href="features.html" id="navFeatures">الخدمات</a>
+        <a href="programs.html" id="navPrograms">البرامج</a>
+        <a href="ideas.html" class="active" id="navIdeas">الأفكار</a>
+        <a href="contact.html" id="navContact">التواصل</a>
+      </nav>
+      <div class="header-actions"><button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button></div>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <div class="section-head"><div><h2 class="section-title" id="pageTitle">منشورات الأفكار</h2><p class="section-desc" id="pageDesc">اكتب أفكارك وملاحظاتك وبرامجك المستقبلية هنا.</p></div></div>
+      <div class="features" style="grid-template-columns: 0.95fr 1.05fr;">
+        <div class="panel">
+          <h3 id="editorTitle">إضافة منشور جديد</h3>
+          <div class="field"><label for="postType" id="typeLabel">نوع المنشور</label><select id="postType"><option value="idea">فكرة</option><option value="program">برنامج</option><option value="product">منتج</option><option value="note">ملاحظة</option></select></div>
+          <div class="field"><label for="postTitle" id="titleLabel">العنوان</label><input type="text" id="postTitle" /></div>
+          <div class="field"><label for="postContent" id="contentLabel">المحتوى</label><textarea id="postContent"></textarea></div>
+          <div class="helper" id="editorHelper">يتم حفظ المنشورات داخل المتصفح في هذه النسخة.</div>
+          <div class="toolbar"><button class="btn btn-primary" onclick="addPost()" id="publishBtn">نشر الآن</button><button class="btn btn-light" onclick="clearEditor()" id="clearBtn">مسح الحقول</button></div>
+        </div>
+        <div class="panel">
+          <h3 id="feedTitle">المنشورات المعروضة</h3>
+          <div id="postsContainer" class="posts-wrap"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer><div class="container" id="footerText">جميع الحقوق محفوظة © Technology Lab</div></footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technology Lab - Home</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/lang.js"></script>
+</head>
+<body onload="applyCommonLang()">
+  <header>
+    <div class="container header-wrap">
+      <div class="brand">
+        <div class="brand-badge">TL</div>
+        <div>
+          <div class="brand-title">Technology Lab</div>
+          <div class="brand-subtitle" id="brandSub">منصة للأفكار والبرامج والمنتجات</div>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html" class="active" id="navHome">الرئيسية</a>
+        <a href="features.html" id="navFeatures">الخدمات</a>
+        <a href="programs.html" id="navPrograms">البرامج</a>
+        <a href="ideas.html" id="navIdeas">الأفكار</a>
+        <a href="contact.html" id="navContact">التواصل</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="container hero-grid">
+      <div class="hero-card">
+        <span class="hero-kicker" id="heroKicker">منصتك الشخصية التقنية</span>
+        <h1 id="heroTitle">حوّل أفكارك وبرامجك إلى منصة حقيقية قابلة للنشر والتطوير</h1>
+        <p id="heroDesc">موقع Technology Lab يجمع أفكارك، برامجك، ومنتجاتك في واجهة حديثة وسهلة، مع دعم عربي وإنكليزي من البداية.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="ideas.html" id="heroBtn1">ابدأ بالأفكار</a>
+          <a class="btn btn-light" href="programs.html" id="heroBtn2">استعرض البرامج</a>
+        </div>
+      </div>
+      <div class="panel stats-box">
+        <h3 id="statsTitle">نظرة سريعة</h3>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-number">AR / EN</div><div class="stat-label" id="stat1">دعم لغتين</div></div>
+          <div class="stat-card"><div class="stat-number">5</div><div class="stat-label" id="stat2">صفحات مرتبة</div></div>
+          <div class="stat-card"><div class="stat-number">Easy</div><div class="stat-label" id="stat3">تعديل بسيط</div></div>
+          <div class="stat-card"><div class="stat-number">v1</div><div class="stat-label" id="stat4">نسخة أولى</div></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer><div class="container" id="footerText">جميع الحقوق محفوظة © Technology Lab</div></footer>
+
+  <script>
+    function applyPageText(){
+      const lang=getLang();
+      const t = {
+        ar:{heroKicker:'منصتك الشخصية التقنية',heroTitle:'حوّل أفكارك وبرامجك إلى منصة حقيقية قابلة للنشر والتطوير',heroDesc:'موقع Technology Lab يجمع أفكارك، برامجك، ومنتجاتك في واجهة حديثة وسهلة، مع دعم عربي وإنكليزي من البداية.',heroBtn1:'ابدأ بالأفكار',heroBtn2:'استعرض البرامج',statsTitle:'نظرة سريعة',stat1:'دعم لغتين',stat2:'صفحات مرتبة',stat3:'تعديل بسيط',stat4:'نسخة أولى'},
+        en:{heroKicker:'Your personal tech platform',heroTitle:'Turn your ideas and software into a real platform ready for growth',heroDesc:'Technology Lab brings your ideas, programs, and products together in a modern and simple interface with Arabic and English support from day one.',heroBtn1:'Start with Ideas',heroBtn2:'Browse Programs',statsTitle:'Quick Overview',stat1:'Two languages',stat2:'Organized pages',stat3:'Easy editing',stat4:'First version'}
+      }[lang];
+      Object.keys(t).forEach(id=>document.getElementById(id).textContent=t[id]);
+    }
+    applyPageText();
+  </script>
+</body>
+</html>

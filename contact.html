@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technology Lab - Contact</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/lang.js"></script>
+</head>
+<body onload="applyCommonLang(); applyPageText();">
+  <header>
+    <div class="container header-wrap">
+      <div class="brand"><div class="brand-badge">TL</div><div><div class="brand-title">Technology Lab</div><div class="brand-subtitle" id="brandSub">منصة للأفكار والبرامج والمنتجات</div></div></div>
+      <nav>
+        <a href="index.html" id="navHome">الرئيسية</a>
+        <a href="features.html" id="navFeatures">الخدمات</a>
+        <a href="programs.html" id="navPrograms">البرامج</a>
+        <a href="ideas.html" id="navIdeas">الأفكار</a>
+        <a href="contact.html" class="active" id="navContact">التواصل</a>
+      </nav>
+      <div class="header-actions"><button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button></div>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <div class="section-head"><div><h2 class="section-title" id="pageTitle">التواصل</h2><p class="section-desc" id="pageDesc">ضع هنا بريدك الإلكتروني وروابطك الرسمية لاحقًا.</p></div></div>
+      <div class="panel">
+        <h3 id="boxTitle">معلومات التواصل</h3>
+        <p class="helper" id="boxText">يمكنك تعديل هذه الصفحة بسهولة وإضافة البريد الإلكتروني، رقم الهاتف، أو روابط التواصل الاجتماعي الخاصة بك.</p>
+      </div>
+    </div>
+  </main>
+  <footer><div class="container" id="footerText">جميع الحقوق محفوظة © Technology Lab</div></footer>
+  <script>
+    function applyPageText(){
+      const lang=getLang(); const t={
+        ar:{pageTitle:'التواصل',pageDesc:'ضع هنا بريدك الإلكتروني وروابطك الرسمية لاحقًا.',boxTitle:'معلومات التواصل',boxText:'يمكنك تعديل هذه الصفحة بسهولة وإضافة البريد الإلكتروني، رقم الهاتف، أو روابط التواصل الاجتماعي الخاصة بك.'},
+        en:{pageTitle:'Contact',pageDesc:'Put your email and official links here later.',boxTitle:'Contact Information',boxText:'You can easily edit this page and add your email, phone number, or social media links.'}
+      }[lang]; Object.keys(t).forEach(id=>document.getElementById(id).textContent=t[id]);
+    }
+  </script>
+</body>
+</html>

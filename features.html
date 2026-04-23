@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technology Lab - Features</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="assets/lang.js"></script>
+</head>
+<body onload="applyCommonLang(); applyPageText();">
+  <header>
+    <div class="container header-wrap">
+      <div class="brand"><div class="brand-badge">TL</div><div><div class="brand-title">Technology Lab</div><div class="brand-subtitle" id="brandSub">منصة للأفكار والبرامج والمنتجات</div></div></div>
+      <nav>
+        <a href="index.html" id="navHome">الرئيسية</a>
+        <a href="features.html" class="active" id="navFeatures">الخدمات</a>
+        <a href="programs.html" id="navPrograms">البرامج</a>
+        <a href="ideas.html" id="navIdeas">الأفكار</a>
+        <a href="contact.html" id="navContact">التواصل</a>
+      </nav>
+      <div class="header-actions"><button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button></div>
+    </div>
+  </header>
+  <main class="section">
+    <div class="container">
+      <div class="section-head"><div><h2 class="section-title" id="pageTitle">الخدمات</h2><p class="section-desc" id="pageDesc">هذا القسم يوضح ما الذي يمكن أن يقدمه الموقع لك وللزوار.</p></div></div>
+      <div class="features">
+        <div class="feature-card"><div class="feature-icon">01</div><h3 id="f1">نشر الأفكار</h3><p id="d1">عرض أفكارك التقنية والهندسية بشكل مرتب وواضح.</p></div>
+        <div class="feature-card"><div class="feature-icon">02</div><h3 id="f2">عرض البرامج</h3><p id="d2">تقديم أدواتك وبرامجك مع وصف لكل برنامج.</p></div>
+        <div class="feature-card"><div class="feature-icon">03</div><h3 id="f3">ثنائية اللغة</h3><p id="d3">واجهة عربية وإنكليزية مع حفظ اللغة بين الصفحات.</p></div>
+      </div>
+    </div>
+  </main>
+  <footer><div class="container" id="footerText">جميع الحقوق محفوظة © Technology Lab</div></footer>
+  <script>
+    function applyPageText(){
+      const lang=getLang(); const t={
+        ar:{pageTitle:'الخدمات',pageDesc:'هذا القسم يوضح ما الذي يمكن أن يقدمه الموقع لك وللزوار.',f1:'نشر الأفكار',d1:'عرض أفكارك التقنية والهندسية بشكل مرتب وواضح.',f2:'عرض البرامج',d2:'تقديم أدواتك وبرامجك مع وصف لكل برنامج.',f3:'ثنائية اللغة',d3:'واجهة عربية وإنكليزية مع حفظ اللغة بين الصفحات.'},
+        en:{pageTitle:'Features',pageDesc:'This section shows what the site can offer to you and your visitors.',f1:'Publish Ideas',d1:'Present your technical and engineering ideas in a clear and organized way.',f2:'Show Programs',d2:'Present your tools and programs with a summary for each one.',f3:'Bilingual Support',d3:'Arabic and English interface with language memory across pages.'}
+      }[lang]; Object.keys(t).forEach(id=>document.getElementById(id).textContent=t[id]);
+    }
+  </script>
+</body>
+</html>
