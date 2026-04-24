@@ -6,132 +6,214 @@
 
 <style>
 body {
-  font-family: Arial;
-  background: #f4f6f9;
   margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
 }
 
 .container {
   max-width: 900px;
-  margin: 50px auto;
+  margin: 30px auto;
   background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.back {
+  color: #0066cc;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: inline-block;
 }
 
 h2 {
   text-align: center;
-  color: #333;
+  margin-bottom: 25px;
 }
 
-.input-group {
-  margin-bottom: 15px;
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 24px;
 }
 
-label {
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 6px;
   display: block;
-  margin-bottom: 5px;
 }
 
-input {
+.input-group input {
   width: 100%;
-  padding: 8px;
-  border-radius: 8px;
+  height: 38px;
+  padding: 6px 10px;
   border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.actions {
+  margin-top: 20px;
+  text-align: center;
 }
 
 button {
-  padding: 10px 20px;
-  border: none;
-  background: orange;
+  background: #ff9800;
   color: white;
+  border: none;
+  padding: 10px 35px;
   border-radius: 10px;
   cursor: pointer;
-  margin-top: 10px;
-}
-
-button:hover {
-  background: darkorange;
-}
-
-.result {
-  margin-top: 20px;
-  padding: 15px;
-  background: #f0f3f7;
-  border-radius: 10px;
   font-weight: bold;
 }
 
-.back {
-  margin-bottom: 15px;
-  display: inline-block;
-  cursor: pointer;
-  color: #007bff;
+.result {
+  margin-top: 22px;
+  background: #eef2f7;
+  border-radius: 12px;
+  padding: 18px;
+  line-height: 1.9;
+  font-weight: bold;
+}
+
+.pipe-box {
+  margin-top: 28px;
+  padding: 18px;
+  background: #fbfbfb;
+  border: 1px solid #e2e2e2;
+  border-radius: 14px;
+}
+
+.pipe-title {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.pipe {
+  position: relative;
+  height: 70px;
+  border-radius: 35px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #d8dde5, #aeb7c2);
+  border: 4px solid #8f9aaa;
+}
+
+.flow {
+  position: absolute;
+  inset: 12px;
+  border-radius: 30px;
+  background: repeating-linear-gradient(
+    90deg,
+    #2d9cdb 0px,
+    #2d9cdb 30px,
+    #79c9f2 30px,
+    #79c9f2 60px
+  );
+  animation: moveFlow 1.2s linear infinite;
+}
+
+@keyframes moveFlow {
+  from { background-position: 0 0; }
+  to { background-position: 120px 0; }
+}
+
+.pipe-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  color: #555;
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
 
-<div class="back" onclick="history.back()">⬅ الرجوع</div>
+  <div class="back" onclick="history.back()">⬅ الرجوع</div>
 
-<h2>حاسبة فقدان الضغط في الأنابيب</h2>
+  <h2>حاسبة فقدان الضغط في الأنابيب</h2>
 
-<div class="input-group">
-<label>التدفق (م³/ثانية)</label>
-<input type="number" id="flow">
-</div>
+  <div class="form-grid">
 
-<div class="input-group">
-<label>قطر الأنبوب (متر)</label>
-<input type="number" id="diameter">
-</div>
+    <div class="input-group">
+      <label>التدفق (م³/ساعة)</label>
+      <input type="number" id="flow" value="7200">
+    </div>
 
-<div class="input-group">
-<label>طول الأنبوب (متر)</label>
-<input type="number" id="length">
-</div>
+    <div class="input-group">
+      <label>قطر الأنبوب (متر)</label>
+      <input type="number" id="diameter" value="1.06">
+    </div>
 
-<div class="input-group">
-<label>الكثافة (kg/m³)</label>
-<input type="number" id="density" value="876">
-</div>
+    <div class="input-group">
+      <label>طول الأنبوب (متر)</label>
+      <input type="number" id="length" value="50000">
+    </div>
 
-<button onclick="calculate()">احسب</button>
+    <div class="input-group">
+      <label>الكثافة (kg/m³)</label>
+      <input type="number" id="density" value="876">
+    </div>
 
-<div class="result" id="result"></div>
+  </div>
+
+  <div class="actions">
+    <button onclick="calculate()">احسب</button>
+  </div>
+
+  <div class="result" id="result">
+    أدخل البيانات ثم اضغط احسب.
+  </div>
+
+  <div class="pipe-box">
+    <div class="pipe-title">محاكاة تدفق السائل داخل الأنبوب</div>
+
+    <div class="pipe">
+      <div class="flow"></div>
+    </div>
+
+    <div class="pipe-labels">
+      <span>بداية الخط</span>
+      <span>اتجاه الجريان ←</span>
+      <span>نهاية الخط</span>
+    </div>
+  </div>
 
 </div>
 
 <script>
 function calculate() {
+  let Qh = parseFloat(document.getElementById("flow").value); // m3/hr
+  let Q = Qh / 3600; // m3/s
+  let D = parseFloat(document.getElementById("diameter").value);
+  let L = parseFloat(document.getElementById("length").value);
+  let rho = parseFloat(document.getElementById("density").value);
 
-let Q = parseFloat(document.getElementById("flow").value);
-let D = parseFloat(document.getElementById("diameter").value);
-let L = parseFloat(document.getElementById("length").value);
-let rho = parseFloat(document.getElementById("density").value);
+  let area = Math.PI * Math.pow(D / 2, 2);
+  let velocity = Q / area;
 
-let area = Math.PI * (D/2)**2;
-let velocity = Q / area;
+  let f = 0.02;
+  let dp = f * (L / D) * (rho * velocity * velocity / 2);
 
-let f = 0.02;
-let dp = f * (L/D) * (rho * velocity**2 / 2);
+  let bar = dp / 100000;
+  let psi = dp / 6894.76;
 
-// التحويلات
-let bar = dp / 100000;
-let psi = dp / 6894.76;
-
-document.getElementById("result").innerHTML = `
-فقدان الضغط:<br>
-🔹 ${dp.toFixed(2)} باسكال<br>
-🔹 ${bar.toFixed(2)} بار<br>
-🔹 ${psi.toFixed(2)} psi
-`;
-
+  document.getElementById("result").innerHTML = `
+    <div>فقدان الضغط:</div>
+    🔹 ${dp.toFixed(2)} باسكال<br>
+    🔹 ${bar.toFixed(2)} بار<br>
+    🔹 ${psi.toFixed(2)} psi<br>
+    🔹 سرعة الجريان = ${velocity.toFixed(2)} م/ثانية
+  `;
 }
 </script>
 
