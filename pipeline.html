@@ -5,7 +5,47 @@
 <title>حاسبة ضغط الأنابيب</title>
 
 <style>
-body {
+body
+  <script>
+function togglePipelineLang() {
+  const current = localStorage.getItem("siteLang") || "ar";
+  localStorage.setItem("siteLang", current === "ar" ? "en" : "ar");
+  location.reload();
+}
+
+function applyPipelineLang() {
+  const lang = localStorage.getItem("siteLang") || "ar";
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
+  const t = {
+    ar: {
+      title: "حاسبة فقدان الضغط في الأنابيب",
+      flowLabel: "التدفق (م³/ساعة)",
+      diameterLabel: "قطر الأنبوب (متر)",
+      lengthLabel: "طول الأنبوب (متر)",
+      densityLabel: "الكثافة (kg/m³)",
+      calcBtn: "احسب"
+    },
+    en: {
+      title: "Pipeline Pressure Loss Calculator",
+      flowLabel: "Flow Rate (m³/h)",
+      diameterLabel: "Pipe Diameter (m)",
+      lengthLabel: "Pipe Length (m)",
+      densityLabel: "Density (kg/m³)",
+      calcBtn: "Calculate"
+    }
+  }[lang];
+
+  Object.keys(t).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t[id];
+  });
+}
+
+applyPipelineLang();
+</script>
+  {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #f4f6f9;
