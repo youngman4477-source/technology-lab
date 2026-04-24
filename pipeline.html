@@ -10,14 +10,29 @@ body {
   font-family: Arial, sans-serif;
   background: #f4f6f9;
 }
-
 .container {
-  max-width: 900px;
+  max-width: 850px;
   margin: 30px auto;
   background: white;
   padding: 25px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 280px);
+  justify-content: center;
+  gap: 16px 35px;
+}
+
+.input-group input {
+  width: 100%;
+  height: 34px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
 }
 
 .back {
@@ -32,25 +47,11 @@ h2 {
   margin-bottom: 25px;
 }
 
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px 24px;
-}
 
 .input-group label {
   font-weight: bold;
   margin-bottom: 6px;
   display: block;
-}
-
-.input-group input {
-  width: 100%;
-  height: 38px;
-  padding: 6px 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 15px;
 }
 
 .actions {
@@ -183,7 +184,7 @@ button {
 
     <div class="pipe-labels">
       <span>بداية الخط</span>
-      <span>اتجاه الجريان ←</span>
+      <span>→ اتجاه الجريان</span>
       <span>نهاية الخط</span>
     </div>
   </div>
