@@ -242,56 +242,68 @@ function applyLang(){
     if(el) el.textContent=t[id];
   }
 }
-
+<script>
 function calculate(){
 
-let lang=getLang();
+  let lang = getLang();
 
-let Q=parseFloat(flow.value)/3600;
-let D=parseFloat(diameter.value);
-let L=parseFloat(length.value);
-let rho=parseFloat(density.value);
-let nu=parseFloat(viscosity.value)*1e-6;
-let eps=parseFloat(roughness.value)/1000;
+  let Qh  = parseFloat(document.getElementById("flow").value);
+  let D   = parseFloat(document.getElementById("diameter").value);
+  let L   = parseFloat(document.getElementById("length").value);
+  let rho = parseFloat(document.getElementById("density").value);
+  let cSt = parseFloat(document.getElementById("viscosity").value);
+  let roughMM = parseFloat(document.getElementById("roughness").value);
 
-let A=Math.PI*(D*D)/4;
-let V=Q/A;
+  if (!Qh || !D || !L || !rho || !cSt || !roughMM) {
+    document.getElementById("result").innerHTML =
+      lang === "ar" ? "يرجى إدخال جميع القيم بشكل صحيح." : "Please enter valid values.";
+    return;
+  }
 
-let Re=V*D/nu;
+  let Q = Qh / 3600;
+  let nu = cSt * 1e-6;
+  let eps = roughMM / 1000;
 
-let regime;
-if(Re<2300) regime=lang==="ar"?"طبقي":"Laminar";
-else if(Re<4000) regime=lang==="ar"?"انتقالي":"Transitional";
-else regime=lang==="ar"?"مضطرب":"Turbulent";
+  let A = Math.PI * Math.pow(D, 2) / 4;
+  let V = Q / A;
 
-let f;
-if(Re<2300){
-  f=64/Re;
-}else{
-  f=0.25/Math.pow(Math.log10((eps/(3.7*D))+(5.74/Math.pow(Re,0.9))),2);
+  let Re = V * D / nu;
+
+  let regime;
+  if (Re < 2300) regime = lang === "ar" ? "طبقي" : "Laminar";
+  else if (Re < 4000) regime = lang === "ar" ? "انتقالي" : "Transitional";
+  else regime = lang === "ar" ? "مضطرب" : "Turbulent";
+
+  let f;
+  if (Re < 2300) {
+    f = 64 / Re;
+  } else {
+    f = 0.25 / Math.pow(
+      Math.log10((eps / (3.7 * D)) + (5.74 / Math.pow(Re, 0.9))),
+      2
+    );
+  }
+
+  let dp = f * (L / D) * (rho * V * V / 2);
+  let bar = dp / 100000;
+  let psi = dp / 6894.76;
+
+  document.getElementById("result").innerHTML = `
+    ${lang === "ar" ? "النتائج" : "Results"}<br><br>
+
+    🔹 ${lang === "ar" ? "السرعة" : "Velocity"} = ${V.toFixed(2)} m/s<br>
+    🔹 ${lang === "ar" ? "رقم رينولدز" : "Reynolds Number"} = ${Re.toFixed(0)}<br>
+    🔹 ${lang === "ar" ? "نوع الجريان" : "Flow Regime"} = ${regime}<br>
+    🔹 ${lang === "ar" ? "معامل الاحتكاك" : "Friction Factor"} = ${f.toFixed(5)}<br><br>
+
+    🔹 ${lang === "ar" ? "فقدان الضغط" : "Pressure Loss"} = ${bar.toFixed(2)} bar<br>
+    🔹 ${lang === "ar" ? "فقدان الضغط" : "Pressure Loss"} = ${psi.toFixed(2)} psi
+  `;
+
+  document.getElementById("result").style.border =
+    Re > 4000 ? "2px solid green" : "2px solid red";
 }
-
-let dp=f*(L/D)*(rho*V*V/2);
-
-let bar=dp/100000;
-
-result.innerHTML=`
-${lang==="ar"?"النتائج":"Results"}<br><br>
-
-🔹 ${lang==="ar"?"السرعة":"Velocity"} = ${V.toFixed(2)} m/s<br>
-🔹 ${lang==="ar"?"رقم رينولدز":"Re"} = ${Re.toFixed(0)}<br>
-🔹 ${lang==="ar"?"نوع الجريان":"Flow"} = ${regime}<br>
-🔹 ${lang==="ar"?"معامل الاحتكاك":"f"} = ${f.toFixed(5)}<br><br>
-
-🔹 ${lang==="ar"?"فقدان الضغط":"Pressure Loss"} = ${bar.toFixed(2)} bar
-`;
-
-result.style.border = Re>4000 ? "2px solid green" : "2px solid red";
-
-}
-
-applyLang();
-
+</script>
 </script>
 
 </body>
