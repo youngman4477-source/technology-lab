@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>اختيار المضخات</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f9;
+}
+
+.container {
+  max-width: 850px;
+  margin: 30px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.back {
+  color: #0066cc;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 280px);
+  justify-content: center;
+  gap: 16px 35px;
+}
+
+.input-group label {
+  font-weight: bold;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  height: 34px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.actions {
+  margin-top: 20px;
+  text-align: center;
+}
+
+button {
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 10px 35px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.result {
+  margin-top: 22px;
+  background: #eef2f7;
+  border-radius: 12px;
+  padding: 18px;
+  line-height: 1.9;
+  font-weight: bold;
+}
+
+.pump-box {
+  margin-top: 28px;
+  padding: 18px;
+  background: #fbfbfb;
+  border: 1px solid #e2e2e2;
+  border-radius: 14px;
+}
+
+.pump-title {
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.pump-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 15px;
+}
+
+.pipe {
+  width: 220px;
+  height: 34px;
+  background: linear-gradient(180deg, #cfd6df, #9da8b6);
+  border: 3px solid #8895a6;
+}
+
+.pump-body {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 20%, #ffb15c 21%, #ff8c00 70%);
+  border: 5px solid #d46f00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.flow-text {
+  text-align: center;
+  margin-top: 10px;
+  color: #555;
+}
+
+.note {
+  margin-top: 15px;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pipe {
+    width: 120px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="back" onclick="history.back()">⬅ الرجوع</div>
+
+  <h2>برنامج اختيار المضخة</h2>
+
+  <div class="form-grid">
+
+    <div class="input-group">
+      <label>التدفق المطلوب (م³/ساعة)</label>
+      <input type="number" id="flow" value="320">
+    </div>
+
+    <div class="input-group">
+      <label>الضغط المطلوب (بار)</label>
+      <input type="number" id="pressure" value="5">
+    </div>
+
+    <div class="input-group">
+      <label>كفاءة المضخة (%)</label>
+      <input type="number" id="efficiency" value="70">
+    </div>
+
+    <div class="input-group">
+      <label>كثافة السائل (kg/m³)</label>
+      <input type="number" id="density" value="876">
+    </div>
+
+  </div>
+
+  <div class="actions">
+    <button onclick="calculatePump()">احسب</button>
+  </div>
+
+  <div class="result" id="result">
+    أدخل البيانات ثم اضغط احسب.
+  </div>
+
+  <div class="pump-box">
+    <div class="pump-title">رسم مبسط لمنظومة الضخ</div>
+
+    <div class="pump-visual">
+      <div class="pipe"></div>
+      <div class="pump-body">PUMP</div>
+      <div class="pipe"></div>
+    </div>
+
+    <div class="flow-text">اتجاه الجريان ← من السحب إلى الدفع</div>
+
+    <div class="note">
+      هذه الحسابات أولية لاختيار القدرة التقريبية، ولا تغني عن منحنيات الشركة المصنعة أو دراسة NPSH والتشغيل الفعلي.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function calculatePump() {
+  let Qh = parseFloat(document.getElementById("flow").value);
+  let pressureBar = parseFloat(document.getElementById("pressure").value);
+  let efficiencyPercent = parseFloat(document.getElementById("efficiency").value);
+  let rho = parseFloat(document.getElementById("density").value);
+
+  let g = 9.81;
+  let Q = Qh / 3600;
+  let dp = pressureBar * 100000;
+  let efficiency = efficiencyPercent / 100;
+
+  let head = dp / (rho * g);
+  let hydraulicPower = dp * Q / 1000;
+  let motorPower = hydraulicPower / efficiency;
+
+  let pumpType = "";
+
+  if (Qh < 50 && pressureBar > 10) {
+    pumpType = "مضخة إزاحة موجبة أو مضخة متعددة المراحل قد تكون مناسبة.";
+  } else if (Qh >= 50 && pressureBar <= 20) {
+    pumpType = "مضخة طرد مركزي أفقية غالبًا مناسبة.";
+  } else if (Qh > 500 && pressureBar <= 15) {
+    pumpType = "مضخة طرد مركزي كبيرة أو مضخة Double Suction قد تكون مناسبة.";
+  } else {
+    pumpType = "تحتاج مقارنة مع منحنيات المصنع لاختيار النوع بدقة.";
+  }
+
+  document.getElementById("result").innerHTML = `
+    <div>نتائج الاختيار الأولي:</div>
+    🔹 الهيد التقريبي = ${head.toFixed(2)} متر<br>
+    🔹 القدرة الهيدروليكية = ${hydraulicPower.toFixed(2)} kW<br>
+    🔹 قدرة المحرك التقريبية = ${motorPower.toFixed(2)} kW<br>
+    🔹 قدرة المحرك التقريبية = ${(motorPower * 1.341).toFixed(2)} HP<br>
+    🔹 الملاحظة: ${pumpType}
+  `;
+}
+</script>
+
+</body>
+</html>
