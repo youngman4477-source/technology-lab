@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Technology Lab - Programs</title>
+
   <link rel="stylesheet" href="style.css">
   <script src="lang.js"></script>
 </head>
 
 <body onload="applyCommonLang(); applyPageText();">
 
+<!-- HEADER -->
 <header>
   <div class="container header-wrap">
+
     <div class="brand">
       <div class="brand-badge">TL</div>
       <div>
@@ -31,37 +34,38 @@
     <div class="header-actions">
       <button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button>
     </div>
+
   </div>
 </header>
 
+<!-- MAIN -->
 <main class="section">
   <div class="container">
 
     <div class="section-head">
-      <div>
-        <h2 class="section-title" id="pageTitle">البرامج والأدوات</h2>
-        <p class="section-desc" id="pageDesc">
-          هنا تعرض برامجك الحالية أو المستقبلية بشكل منظم وسهل.
-        </p>
-      </div>
+      <h2 class="section-title" id="pageTitle">البرامج والأدوات</h2>
+      <p class="section-desc" id="pageDesc">
+        هنا تعرض برامجك الحالية أو المستقبلية بشكل منظم وسهل.
+      </p>
     </div>
 
     <div class="features">
 
-      <div class="feature-card">
-        <a href="pipeline.html" style="text-decoration:none; color:inherit;">
-          <div class="feature-icon">P1</div>
-          <h3 id="p1">حاسبة ضغط الأنابيب</h3>
-          <p id="d1">أداة لحساب الضغط والفواقد والسرعة داخل خطوط النفط.</p>
-        </a>
+      <!-- P1 -->
+      <div class="feature-card" onclick="location.href='pipeline.html'" style="cursor:pointer;">
+        <div class="feature-icon">P1</div>
+        <h3 id="p1">حاسبة ضغط الأنابيب</h3>
+        <p id="d1">أداة لحساب الضغط والفواقد والسرعة داخل خطوط النفط.</p>
       </div>
 
+      <!-- P2 -->
       <div class="feature-card">
         <div class="feature-icon">P2</div>
         <h3 id="p2">اختيار المضخات</h3>
         <p id="d2">مساعد أولي لاختيار المضخة المناسبة حسب التدفق والضغط.</p>
       </div>
 
+      <!-- P3 -->
       <div class="feature-card">
         <div class="feature-icon">P3</div>
         <h3 id="p3">متابعة المشاريع</h3>
@@ -73,12 +77,14 @@
   </div>
 </main>
 
+<!-- FOOTER -->
 <footer>
   <div class="container" id="footerText">
     جميع الحقوق محفوظة © Technology Lab
   </div>
 </footer>
 
+<!-- LANGUAGE SCRIPT -->
 <script>
 function applyPageText() {
   const lang = getLang();
@@ -96,13 +102,13 @@ function applyPageText() {
     },
     en: {
       pageTitle: "Programs & Tools",
-      pageDesc: "Here you can present your current or future software in an organized and simple way.",
+      pageDesc: "Here you can present your current or future software in an organized way.",
       p1: "Pipeline Pressure Calculator",
-      d1: "A tool for calculating pressure, losses, and velocity inside oil pipelines.",
+      d1: "Tool to calculate pressure, losses, and velocity in pipelines.",
       p2: "Pump Selection",
-      d2: "A basic assistant for selecting a suitable pump based on flow and pressure.",
+      d2: "Assistant to choose suitable pump based on flow and pressure.",
       p3: "Project Tracking",
-      d3: "A tool for managing progress percentages, duration, and attachments."
+      d3: "Tool for managing progress, duration, and attachments."
     }
   }[lang];
 
@@ -111,8 +117,6 @@ function applyPageText() {
     if (el) el.textContent = t[id];
   });
 }
-
-applyPageText();
 </script>
 
 </body>
