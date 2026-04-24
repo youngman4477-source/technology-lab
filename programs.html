@@ -89,6 +89,10 @@
 function applyPageText() {
   const lang = getLang();
 
+  // ⭐ مهم جداً
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+
   const t = {
     ar: {
       pageTitle: "البرامج والأدوات",
@@ -117,6 +121,7 @@ function applyPageText() {
     if (el) el.textContent = t[id];
   });
 }
+
 </script>
 
 </body>
