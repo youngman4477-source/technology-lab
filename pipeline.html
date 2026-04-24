@@ -3,46 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <title>حاسبة ضغط الأنابيب</title>
-<link rel="stylesheet" href="style.css">
+
+<style>
+body {
+  font-family: Arial;
+  background: #f4f6f9;
+  margin: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 50px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background: orange;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: darkorange;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f0f3f7;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.back {
+  margin-bottom: 15px;
+  display: inline-block;
+  cursor: pointer;
+  color: #007bff;
+}
+</style>
+
 </head>
 
 <body>
 
 <div class="container">
-  <h2>حاسبة فقدان الضغط في الأنابيب</h2>
 
-  <label>التدفق (متر مكعب/ثانية):</label>
-  <input type="number" id="flow">
+<div class="back" onclick="history.back()">⬅ الرجوع</div>
 
-  <label>قطر الأنبوب (متر):</label>
-  <input type="number" id="diameter">
+<h2>حاسبة فقدان الضغط في الأنابيب</h2>
 
-  <label>طول الأنبوب (متر):</label>
-  <input type="number" id="length">
+<div class="input-group">
+<label>التدفق (م³/ثانية)</label>
+<input type="number" id="flow">
+</div>
 
-  <label>الكثافة (kg/m³):</label>
-  <input type="number" id="density" value="876">
+<div class="input-group">
+<label>قطر الأنبوب (متر)</label>
+<input type="number" id="diameter">
+</div>
 
-  <button onclick="calculate()">احسب</button>
+<div class="input-group">
+<label>طول الأنبوب (متر)</label>
+<input type="number" id="length">
+</div>
 
-  <h3 id="result"></h3>
+<div class="input-group">
+<label>الكثافة (kg/m³)</label>
+<input type="number" id="density" value="876">
+</div>
+
+<button onclick="calculate()">احسب</button>
+
+<div class="result" id="result"></div>
+
 </div>
 
 <script>
 function calculate() {
-  let Q = parseFloat(document.getElementById("flow").value);
-  let D = parseFloat(document.getElementById("diameter").value);
-  let L = parseFloat(document.getElementById("length").value);
-  let rho = parseFloat(document.getElementById("density").value);
 
-  let area = Math.PI * Math.pow(D/2, 2);
-  let velocity = Q / area;
+let Q = parseFloat(document.getElementById("flow").value);
+let D = parseFloat(document.getElementById("diameter").value);
+let L = parseFloat(document.getElementById("length").value);
+let rho = parseFloat(document.getElementById("density").value);
 
-  let f = 0.02; // تقريب
-  let dp = f * (L/D) * (rho * velocity * velocity / 2);
+let area = Math.PI * (D/2)**2;
+let velocity = Q / area;
 
-  document.getElementById("result").innerHTML =
-    "فقدان الضغط = " + dp.toFixed(2) + " باسكال";
+let f = 0.02;
+let dp = f * (L/D) * (rho * velocity**2 / 2);
+
+// التحويلات
+let bar = dp / 100000;
+let psi = dp / 6894.76;
+
+document.getElementById("result").innerHTML = `
+فقدان الضغط:<br>
+🔹 ${dp.toFixed(2)} باسكال<br>
+🔹 ${bar.toFixed(2)} بار<br>
+🔹 ${psi.toFixed(2)} psi
+`;
+
 }
 </script>
 
