@@ -700,18 +700,18 @@ function resetValues(){
   calculate();
 }
 
-function setFlowColor(regimeType){
+ function setFlowColor(regimeType){
   const flow = document.getElementById("flowVisual");
 
   if(regimeType === "laminar"){
-    flow.style.setProperty("--flow1","#e11d28");
-    flow.style.setProperty("--flow2","#ff6b6b");
+    flow.style.setProperty("--flow1","#0ea5e9");
+    flow.style.setProperty("--flow2","#7dd3fc");
   }else if(regimeType === "transition"){
     flow.style.setProperty("--flow1","#f5b700");
     flow.style.setProperty("--flow2","#ffd84d");
   }else{
     flow.style.setProperty("--flow1","#e11d28");
-    flow.style.setProperty("--flow2","#ff9b00");
+    flow.style.setProperty("--flow2","#ff8c00");
   }
 }
 
