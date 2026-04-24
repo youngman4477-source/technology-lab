@@ -4,48 +4,116 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Technology Lab - Programs</title>
- <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
   <script src="lang.js"></script>
 </head>
+
 <body onload="applyCommonLang(); applyPageText();">
-  <header>
-    <div class="container header-wrap">
-      <div class="brand"><div class="brand-badge">TL</div><div><div class="brand-title">Technology Lab</div><div class="brand-subtitle" id="brandSub">منصة للأفكار والبرامج والمنتجات</div></div></div>
-      <nav>
-        <a href="index.html" id="navHome">الرئيسية</a>
-        <a href="features.html" id="navFeatures">الخدمات</a>
-        <a href="programs.html" class="active" id="navPrograms">البرامج</a>
-        <a href="ideas.html" id="navIdeas">الأفكار</a>
-        <a href="contact.html" id="navContact">التواصل</a>
-      </nav>
-      <div class="header-actions"><button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button></div>
-    </div>
-  </header>
-  <main class="section">
-    <div class="container">
-      <div class="section-head"><div><h2 class="section-title" id="pageTitle">البرامج والأدوات</h2><p class="section-desc" id="pageDesc">هنا تعرض برامجك الحالية أو المستقبلية بشكل منظم وسهل.</p></div></div>
-      <div class="features">
-        <div class="feature-card"><div class="feature-icon"><a href="pipeline.html" style="text-decoration:none; color:inherit;">
-  <div class="card">
-    <span class="badge">P1</span>
-    <h3>حاسبة ضغط الأنابيب</h3>
-    <p>أداة لحساب الضغط والفواقد والسرعة داخل خطوط النفط.</p>
-  </div>
-</a>
-        </div><h3 id="p1">حاسبة ضغط الأنابيب</h3><p id="d1">أداة لحساب الضغط والفواقد والسرعة داخل خطوط النفط.</p></div>
-        <div class="feature-card"><div class="feature-icon">P2</div><h3 id="p2">اختيار المضخات</h3><p id="d2">مساعد أولي لاختيار المضخة المناسبة حسب التدفق والضغط.</p></div>
-        <div class="feature-card"><div class="feature-icon">P3</div><h3 id="p3">متابعة المشاريع</h3><p id="d3">أداة لإدارة نسب الإنجاز والمدة والمرفقات.</p></div>
+
+<header>
+  <div class="container header-wrap">
+    <div class="brand">
+      <div class="brand-badge">TL</div>
+      <div>
+        <div class="brand-title">Technology Lab</div>
+        <div class="brand-subtitle" id="brandSub">منصة للأفكار والبرامج والمنتجات</div>
       </div>
     </div>
-  </main>
-  <footer><div class="container" id="footerText">جميع الحقوق محفوظة © Technology Lab</div></footer>
-  <script>
-    function applyPageText(){
-      const lang=getLang(); const t={
-        ar:{pageTitle:'البرامج والأدوات',pageDesc:'هنا تعرض برامجك الحالية أو المستقبلية بشكل منظم وسهل.',p1:'حاسبة ضغط الأنابيب',d1:'أداة لحساب الضغط والفواقد والسرعة داخل خطوط النفط.',p2:'اختيار المضخات',d2:'مساعد أولي لاختيار المضخة المناسبة حسب التدفق والضغط.',p3:'متابعة المشاريع',d3:'أداة لإدارة نسب الإنجاز والمدة والمرفقات.'},
-        en:{pageTitle:'Programs & Tools',pageDesc:'Here you can present your current or future software in an organized and simple way.',p1:'Pipeline Pressure Calculator',d1:'A tool to calculate pressure, losses, and velocity in oil pipelines.',p2:'Pump Selection',d2:'A first-step assistant to choose the right pump by flow and pressure.',p3:'Project Tracking',d3:'A tool for managing progress, duration, and attachments.'}
-      }[lang]; Object.keys(t).forEach(id=>document.getElementById(id).textContent=t[id]);
+
+    <nav>
+      <a href="index.html" id="navHome">الرئيسية</a>
+      <a href="features.html" id="navFeatures">الخدمات</a>
+      <a href="programs.html" class="active" id="navPrograms">البرامج</a>
+      <a href="ideas.html" id="navIdeas">الأفكار</a>
+      <a href="contact.html" id="navContact">التواصل</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button>
+    </div>
+  </div>
+</header>
+
+<main class="section">
+  <div class="container">
+
+    <div class="section-head">
+      <div>
+        <h2 class="section-title" id="pageTitle">البرامج والأدوات</h2>
+        <p class="section-desc" id="pageDesc">
+          هنا تعرض برامجك الحالية أو المستقبلية بشكل منظم وسهل.
+        </p>
+      </div>
+    </div>
+
+    <div class="features">
+
+      <div class="feature-card">
+        <a href="pipeline.html" style="text-decoration:none; color:inherit;">
+          <div class="feature-icon">P1</div>
+          <h3 id="p1">حاسبة ضغط الأنابيب</h3>
+          <p id="d1">أداة لحساب الضغط والفواقد والسرعة داخل خطوط النفط.</p>
+        </a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">P2</div>
+        <h3 id="p2">اختيار المضخات</h3>
+        <p id="d2">مساعد أولي لاختيار المضخة المناسبة حسب التدفق والضغط.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">P3</div>
+        <h3 id="p3">متابعة المشاريع</h3>
+        <p id="d3">أداة لإدارة نسب الإنجاز والمدة والمرفقات.</p>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container" id="footerText">
+    جميع الحقوق محفوظة © Technology Lab
+  </div>
+</footer>
+
+<script>
+function applyPageText() {
+  const lang = getLang();
+
+  const t = {
+    ar: {
+      pageTitle: "البرامج والأدوات",
+      pageDesc: "هنا تعرض برامجك الحالية أو المستقبلية بشكل منظم وسهل.",
+      p1: "حاسبة ضغط الأنابيب",
+      d1: "أداة لحساب الضغط والفواقد والسرعة داخل خطوط النفط.",
+      p2: "اختيار المضخات",
+      d2: "مساعد أولي لاختيار المضخة المناسبة حسب التدفق والضغط.",
+      p3: "متابعة المشاريع",
+      d3: "أداة لإدارة نسب الإنجاز والمدة والمرفقات."
+    },
+    en: {
+      pageTitle: "Programs & Tools",
+      pageDesc: "Here you can present your current or future software in an organized and simple way.",
+      p1: "Pipeline Pressure Calculator",
+      d1: "A tool for calculating pressure, losses, and velocity inside oil pipelines.",
+      p2: "Pump Selection",
+      d2: "A basic assistant for selecting a suitable pump based on flow and pressure.",
+      p3: "Project Tracking",
+      d3: "A tool for managing progress percentages, duration, and attachments."
     }
-  </script>
+  }[lang];
+
+  Object.keys(t).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = t[id];
+  });
+}
+
+applyPageText();
+</script>
+
 </body>
 </html>
