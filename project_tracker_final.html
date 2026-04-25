@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>برنامج متابعة المشاريع</title>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    :root{
+      --bg:#07111f;--card:#0d1c31;--card2:#10243f;--text:#eef6ff;--muted:#9fb3c8;
+      --accent:#ffb35c;--accent2:#4cc9f0;--good:#2ee59d;--warn:#ffd166;--bad:#ff5d73;
+      --line:rgba(255,255,255,.12);--shadow:0 18px 50px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Calibri,Arial,Tahoma,sans-serif;background:radial-gradient(circle at top left,#183b63 0,#07111f 42%,#040914 100%);color:var(--text)}
+    header{position:sticky;top:0;z-index:10;background:linear-gradient(90deg,#ff9b45,#ffc46f);color:#172033;box-shadow:var(--shadow)}
+    .top{max-width:1450px;margin:auto;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+    .brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:16px;background:#172033;color:#ffc46f;display:grid;place-items:center;font-size:26px;font-weight:900}.brand h1{margin:0;font-size:25px}.brand p{margin:2px 0 0;font-size:14px;color:#26364c}
+    .wrap{max-width:1450px;margin:auto;padding:18px}.grid{display:grid;grid-template-columns:400px 1fr;gap:18px}@media(max-width:1000px){.grid{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg,rgba(16,36,63,.96),rgba(8,20,38,.96));border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px}.card h2{margin:0 0 14px;font-size:21px;color:#ffdca7}.form{display:grid;gap:10px}.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    label{font-size:13px;color:var(--muted);display:block;margin-bottom:5px}input,select,textarea{width:100%;border:1px solid var(--line);background:#071629;color:var(--text);border-radius:14px;padding:10px 12px;font-family:Calibri,Arial;font-size:15px;outline:none}textarea{min-height:75px;resize:vertical}input:focus,textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(76,201,240,.12)}
+    .btns{display:flex;gap:9px;flex-wrap:wrap;margin-top:10px}.btn{border:0;border-radius:14px;padding:11px 14px;font-weight:800;cursor:pointer;color:#101827;background:#e8f2ff;transition:.2s}.btn:hover{transform:translateY(-1px);filter:brightness(1.05)}.primary{background:linear-gradient(90deg,#ffad5b,#ffd166)}.blue{background:linear-gradient(90deg,#4cc9f0,#b8f3ff)}.green{background:linear-gradient(90deg,#2ee59d,#b9ffd9)}.red{background:linear-gradient(90deg,#ff5d73,#ffb0ba)}.ghost{background:#142943;color:#eaf5ff;border:1px solid var(--line)}
+    .toolbar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px}.search{min-width:260px;max-width:430px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}.stat{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:18px;padding:13px}.stat b{font-size:22px;color:#fff}.stat span{display:block;color:var(--muted);font-size:13px;margin-top:3px}
+    .tablebox{overflow:auto;max-height:620px;border-radius:18px;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;min-width:1250px;background:#071629}th,td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:center;vertical-align:middle}th{position:sticky;top:0;background:#10243f;color:#ffdca7;z-index:2}tbody tr:hover{background:rgba(76,201,240,.08)}.seq{font-family:Calibri,Arial;font-size:20px;font-weight:900;color:#ffd166}.projectcell{display:flex;gap:10px;align-items:center;justify-content:flex-start;text-align:right}.projectimg{width:72px;height:52px;border-radius:12px;object-fit:cover;border:1px solid var(--line);background:#10243f}.noimg{width:72px;height:52px;border-radius:12px;background:#132840;display:grid;place-items:center;color:#7f94aa;font-size:12px}.bar{height:14px;background:#07111f;border-radius:99px;overflow:hidden;border:1px solid rgba(255,255,255,.14);min-width:135px}.fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--bad),var(--warn),var(--good));width:0}.small{font-size:12px;color:var(--muted)}.badge{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800}.ok{background:rgba(46,229,157,.16);color:#80ffd0}.late{background:rgba(255,93,115,.16);color:#ffadb8}.wait{background:rgba(255,209,102,.16);color:#ffe3a0}.link{color:#8ee7ff;text-decoration:none;font-weight:800}.actions button{margin:2px;padding:7px 10px;border-radius:10px;border:0;cursor:pointer;font-weight:800}.footer{text-align:center;color:#8ea6bd;margin:18px 0 8px;font-size:13px}.hint{background:rgba(255,209,102,.12);border:1px solid rgba(255,209,102,.25);border-radius:16px;padding:12px;color:#ffe8b2;font-size:14px;line-height:1.6}.details{margin-top:14px;display:none}.details.active{display:block}.weekly{display:grid;gap:8px}.weekitem{border:1px solid var(--line);border-radius:14px;padding:9px;background:rgba(255,255,255,.04)}.weekitem b{color:#ffdca7}.fileNote{font-size:12px;color:#9fb3c8;line-height:1.5}
+  </style>
+</head>
+<body>
+<header>
+  <div class="top">
+    <div class="brand"><div class="logo">📊</div><div><h1>برنامج متابعة المشاريع</h1><p>قاعدة بيانات Excel واضحة بدون تشفير — تصميم المهندس شهاب أحمد العزي</p></div></div>
+    <div class="btns"><button class="btn ghost" onclick="downloadTemplate()">تحميل قالب Excel</button><button class="btn blue" onclick="document.getElementById('excelFile').click()">استيراد Excel</button><button class="btn green" onclick="exportExcel()">حفظ إلى Excel</button></div>
+    <input id="excelFile" type="file" accept=".xlsx,.xls" hidden onchange="importExcel(event)">
+  </div>
+</header>
+<div class="wrap">
+  <div class="grid">
+    <section class="card">
+      <h2>إدخال / تحديث بيانات المشروع</h2>
+      <div class="hint">مهم: عند الحفظ إلى Excel سيتم تخزين كل حقل في عمود مستقل وبالعربية. لا يوجد تشفير ولا JSON داخل الخلايا.</div>
+      <div class="form" style="margin-top:12px">
+        <input type="hidden" id="editIndex" value="">
+        <div class="row2"><div><label>التسلسل</label><input id="seq" type="number" placeholder="1"></div><div><label>رقم العقد</label><input id="contract" placeholder="مثال: NOC-2026-01"></div></div>
+        <div><label>اسم المشروع</label><input id="name" placeholder="اسم المشروع"></div>
+        <div><label>الجهة المنفذة</label><input id="executor" placeholder="اسم الشركة / الجهة المنفذة"></div>
+        <div class="row3"><div><label>تاريخ البدء</label><input id="start" type="date"></div><div><label>مدة التنفيذ / يوم</label><input id="duration" type="number" value="365"></div><div><label>نسبة الإنجاز %</label><input id="progress" type="number" min="0" max="100" value="0"></div></div>
+        <div class="row2"><div><label>أيام التوقف</label><input id="stoppage" type="number" value="0"></div><div><label>أيام التمديد الممنوحة</label><input id="extension" type="number" value="0"></div></div>
+        <div class="row2"><div><label>رابط صورة المشروع من مجلد BOOKS</label><input id="projectImage" placeholder="BOOKS/project1.jpg"></div><div><label>رابط مرفق آخر موقف</label><input id="attachment" placeholder="BOOKS/report1.pdf"></div></div>
+        <div><label>الموقف الحالي</label><textarea id="status" placeholder="اكتب آخر موقف للمشروع"></textarea></div>
+        <div class="btns"><button class="btn primary" onclick="saveProject()">حفظ / تحديث</button><button class="btn ghost" onclick="clearForm()">تفريغ الحقول</button><button class="btn red" onclick="clearAll()">مسح كل البيانات</button></div>
+        <p class="fileNote">ضع الصور والملفات داخل مجلد باسم <b>BOOKS</b> بجانب ملف البرنامج، ثم اكتب المسار مثل: BOOKS/photo.jpg</p>
+      </div>
+    </section>
+    <main class="card">
+      <div class="toolbar"><h2>لوحة متابعة المشاريع</h2><input class="search" id="search" placeholder="بحث باسم المشروع أو رقم العقد أو الجهة..." oninput="render()"></div>
+      <div class="stats"><div class="stat"><b id="total">0</b><span>عدد المشاريع</span></div><div class="stat"><b id="avg">0%</b><span>متوسط الإنجاز</span></div><div class="stat"><b id="late">0</b><span>مشاريع متأخرة</span></div><div class="stat"><b id="done">0</b><span>مشاريع مكتملة</span></div></div>
+      <div class="tablebox"><table id="projectsTable"><thead><tr><th>التسلسل</th><th>المشروع</th><th>رقم العقد</th><th>الجهة المنفذة</th><th>تاريخ البدء</th><th>المدة</th><th>التوقف</th><th>التمديد</th><th>الإنجاز</th><th>الزمن المنقضي</th><th>الحالة</th><th>آخر موقف</th><th>مرفق</th><th>إجراءات</th></tr></thead><tbody></tbody></table></div>
+      <section class="details card" id="details"></section>
+    </main>
+  </div>
+  <div class="footer">حقوق الطبع والنسخ محفوظة للمهندس شهاب أحمد العزي</div>
+</div>
+<script>
+const STORAGE_KEY='projects_tracker_clear_excel_v1';
+let projects=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');
+const headers=["التسلسل","اسم المشروع","رقم العقد","الجهة المنفذة","تاريخ البدء","مدة التنفيذ يوم","نسبة الإنجاز %","أيام التوقف","أيام التمديد","صورة المشروع","الموقف الحالي","مرفق الموقف","تاريخ آخر تحديث"];
+function num(v){return Number(v||0)}
+function todayISO(){return new Date().toISOString().slice(0,10)}
+function saveLocal(){localStorage.setItem(STORAGE_KEY,JSON.stringify(projects))}
+function clearForm(){['editIndex','seq','contract','name','executor','start','duration','progress','stoppage','extension','projectImage','attachment','status'].forEach(id=>document.getElementById(id).value='');document.getElementById('duration').value=365;document.getElementById('progress').value=0;document.getElementById('stoppage').value=0;document.getElementById('extension').value=0}
+function saveProject(){
+  const p={seq:document.getElementById('seq').value||projects.length+1,name:document.getElementById('name').value.trim(),contract:document.getElementById('contract').value.trim(),executor:document.getElementById('executor').value.trim(),start:document.getElementById('start').value,duration:num(document.getElementById('duration').value),progress:num(document.getElementById('progress').value),stoppage:num(document.getElementById('stoppage').value),extension:num(document.getElementById('extension').value),projectImage:document.getElementById('projectImage').value.trim(),attachment:document.getElementById('attachment').value.trim(),status:document.getElementById('status').value.trim(),updated:todayISO()};
+  if(!p.name){alert('يرجى إدخال اسم المشروع');return}
+  const idx=document.getElementById('editIndex').value;
+  if(idx==='')projects.push(p);else projects[Number(idx)]=p;
+  saveLocal();clearForm();render();
+}
+function elapsedDays(start){if(!start)return 0;let d=Math.floor((new Date()-new Date(start))/(1000*60*60*24));return Math.max(0,d)}
+function percentTime(p){let total=num(p.duration)+num(p.extension)-num(p.stoppage);if(total<=0)return 0;return Math.min(100,Math.round(elapsedDays(p.start)/total*100))}
+function statusBadge(p){const t=percentTime(p), pr=num(p.progress);if(pr>=100)return '<span class="badge ok">مكتمل</span>';if(t>pr+10)return '<span class="badge late">متأخر</span>';return '<span class="badge wait">قيد التنفيذ</span>'}
+function render(){
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const tbody=document.querySelector('#projectsTable tbody');tbody.innerHTML='';
+  const list=projects.filter(p=>(p.name+p.contract+p.executor+p.status).toLowerCase().includes(q));
+  list.forEach((p,shownIndex)=>{const realIndex=projects.indexOf(p);const pr=Math.max(0,Math.min(100,num(p.progress)));const tm=percentTime(p);const tr=document.createElement('tr');tr.innerHTML=`<td class="seq">${p.seq}</td><td><div class="projectcell">${p.projectImage?`<img class="projectimg" src="${p.projectImage}" onerror="this.outerHTML='<div class=&quot;noimg&quot;>لا توجد صورة</div>'">`:'<div class="noimg">بدون صورة</div>'}<div><b>${p.name}</b><div class="small">${p.updated?'آخر تحديث: '+p.updated:''}</div></div></div></td><td>${p.contract||'-'}</td><td>${p.executor||'-'}</td><td>${p.start||'-'}</td><td>${p.duration||0}</td><td>${p.stoppage||0}</td><td>${p.extension||0}</td><td><div class="bar"><div class="fill" style="width:${pr}%"></div></div><div class="small">${pr}%</div></td><td><div class="bar"><div class="fill" style="width:${tm}%"></div></div><div class="small">${tm}%</div></td><td>${statusBadge(p)}</td><td>${p.status||'-'}</td><td>${p.attachment?`<a class="link" href="${p.attachment}" target="_blank">فتح المرفق</a>`:'-'}</td><td class="actions"><button onclick="editProject(${realIndex})">تعديل</button><button onclick="showDetails(${realIndex})">تفاصيل</button><button onclick="deleteProject(${realIndex})">حذف</button></td>`;tbody.appendChild(tr)});
+  document.getElementById('total').textContent=projects.length;
+  document.getElementById('avg').textContent=projects.length?Math.round(projects.reduce((s,p)=>s+num(p.progress),0)/projects.length)+'%':'0%';
+  document.getElementById('late').textContent=projects.filter(p=>percentTime(p)>num(p.progress)+10&&num(p.progress)<100).length;
+  document.getElementById('done').textContent=projects.filter(p=>num(p.progress)>=100).length;
+}
+function editProject(i){const p=projects[i];document.getElementById('editIndex').value=i;['seq','contract','name','executor','start','duration','progress','stoppage','extension','projectImage','attachment','status'].forEach(id=>document.getElementById(id).value=p[id]||'');window.scrollTo({top:0,behavior:'smooth'})}
+function deleteProject(i){if(confirm('هل تريد حذف هذا المشروع؟')){projects.splice(i,1);saveLocal();render()}}
+function clearAll(){if(confirm('سيتم مسح جميع المشاريع من ذاكرة المتصفح فقط، هل أنت متأكد؟')){projects=[];saveLocal();render()}}
+function showDetails(i){const p=projects[i];const d=document.getElementById('details');d.classList.add('active');d.innerHTML=`<h2>تفاصيل المشروع: ${p.name}</h2><div class="row2"><div><label>نسبة الإنجاز</label><div class="bar"><div class="fill" style="width:${num(p.progress)}%"></div></div><p>${num(p.progress)}%</p></div><div><label>الزمن المنقضي</label><div class="bar"><div class="fill" style="width:${percentTime(p)}%"></div></div><p>${percentTime(p)}%</p></div></div><p><b>الموقف الحالي:</b> ${p.status||'-'}</p><p><b>المرفق:</b> ${p.attachment?`<a class="link" href="${p.attachment}" target="_blank">فتح المرفق</a>`:'لا يوجد'}</p>`;d.scrollIntoView({behavior:'smooth'})}
+function toRows(){return projects.map(p=>({"التسلسل":p.seq,"اسم المشروع":p.name,"رقم العقد":p.contract,"الجهة المنفذة":p.executor,"تاريخ البدء":p.start,"مدة التنفيذ يوم":p.duration,"نسبة الإنجاز %":p.progress,"أيام التوقف":p.stoppage,"أيام التمديد":p.extension,"صورة المشروع":p.projectImage,"الموقف الحالي":p.status,"مرفق الموقف":p.attachment,"تاريخ آخر تحديث":p.updated}))}
+function exportExcel(){const ws=XLSX.utils.json_to_sheet(toRows(),{header:headers});const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Projects');XLSX.writeFile(wb,'قاعدة_بيانات_المشاريع.xlsx')}
+function downloadTemplate(){const ws=XLSX.utils.json_to_sheet([], {header:headers});const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Projects');XLSX.writeFile(wb,'قالب_قاعدة_بيانات_المشاريع.xlsx')}
+function importExcel(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=function(ev){const wb=XLSX.read(ev.target.result,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{defval:''});projects=rows.map((r,idx)=>({seq:r['التسلسل']||idx+1,name:r['اسم المشروع']||'',contract:r['رقم العقد']||'',executor:r['الجهة المنفذة']||'',start:r['تاريخ البدء']||'',duration:num(r['مدة التنفيذ يوم']),progress:num(r['نسبة الإنجاز %']),stoppage:num(r['أيام التوقف']),extension:num(r['أيام التمديد']),projectImage:r['صورة المشروع']||'',status:r['الموقف الحالي']||'',attachment:r['مرفق الموقف']||'',updated:r['تاريخ آخر تحديث']||todayISO()})).filter(p=>p.name);saveLocal();render();alert('تم استيراد البيانات بنجاح وبصيغة أعمدة واضحة')};reader.readAsArrayBuffer(file)}
+render();
+</script>
+</body>
+</html>
