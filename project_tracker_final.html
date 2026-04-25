@@ -26,6 +26,23 @@
 </head>
 <body>
 <header>
+  <button onclick="goBack()" style="
+  padding:10px 20px;
+  background:#f39c12;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  margin-bottom:15px;
+">
+⬅ العودة للرئيسية
+</button>
+
+<script>
+function goBack(){
+  window.location.href = "index.html"; // اسم الصفحة الرئيسية
+}
+</script>
   <div class="top">
     <div class="brand"><div class="logo">📊</div><div><h1>برنامج متابعة المشاريع</h1><p>قاعدة بيانات Excel واضحة بدون تشفير — تصميم المهندس شهاب أحمد العزي</p></div></div>
     <div class="btns"><button class="btn ghost" onclick="downloadTemplate()">تحميل قالب Excel</button><button class="btn blue" onclick="document.getElementById('excelFile').click()">استيراد Excel</button><button class="btn green" onclick="exportExcel()">حفظ إلى Excel</button></div>
