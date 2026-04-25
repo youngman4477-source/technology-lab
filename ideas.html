@@ -51,5 +51,39 @@
     </div>
   </main>
   <footer><div class="container" id="footerText">جميع الحقوق محفوظة © Technology Lab</div></footer>
+  <script>
+function addPost() {
+  const type = document.getElementById("postType").value;
+  const title = document.getElementById("postTitle").value.trim();
+  const content = document.getElementById("postContent").value.trim();
+  const postsList = document.getElementById("postsList");
+
+  if (!title || !content) {
+    alert("يرجى كتابة العنوان والمحتوى");
+    return;
+  }
+
+  const post = document.createElement("div");
+  post.style.cssText = `
+    border:1px solid #ead8c8;
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:15px;
+    background:#fffaf5;
+    text-align:right;
+  `;
+
+  post.innerHTML = `
+    <small style="color:#d35400;font-weight:bold;">${type}</small>
+    <h3>${title}</h3>
+    <p>${content}</p>
+  `;
+
+  postsList.prepend(post);
+
+  document.getElementById("postTitle").value = "";
+  document.getElementById("postContent").value = "";
+}
+</script>
 </body>
 </html>
