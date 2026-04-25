@@ -1,89 +1,324 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KWGDQQN4Q9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-KWGDQQN4Q9');
-</script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Technology Lab - Ideas</title>
- <link rel="stylesheet" href="style.css">
-  <script src="lang.js"></script>
-  <script src="posts.js"></script>
-</head>
-<body onload="applyCommonLang(); applyPostsLang();">
-  <header>
-    <div class="container header-wrap">
-      <div class="brand"><div class="brand-badge">TL</div><div><div class="brand-title">Technology Lab</div><div class="brand-subtitle" id="brandSub">منصة للأفكار والبرامج والمنتجات</div></div></div>
-      <nav>
-        <a href="index.html" id="navHome">الرئيسية</a>
-        <a href="features.html" id="navFeatures">الخدمات</a>
-        <a href="programs.html" id="navPrograms">البرامج</a>
-        <a href="ideas.html" class="active" id="navIdeas">الأفكار</a>
-        <a href="contact.html" id="navContact">التواصل</a>
-      </nav>
-      <div class="header-actions"><button class="btn btn-light" id="langBtn" onclick="toggleLang()">EN</button></div>
-    </div>
-  </header>
-  <main class="section">
-    <div class="container">
-      <div class="section-head"><div><h2 class="section-title" id="pageTitle">منشورات الأفكار</h2><p class="section-desc" id="pageDesc">اكتب أفكارك وملاحظاتك وبرامجك المستقبلية هنا.</p></div></div>
-      <div class="features" style="grid-template-columns: 0.95fr 1.05fr;">
-        <div class="panel">
-          <h3 id="editorTitle">إضافة منشور جديد</h3>
-          <div class="field"><label for="postType" id="typeLabel">نوع المنشور</label><select id="postType"><option value="idea">فكرة</option><option value="program">برنامج</option><option value="product">منتج</option><option value="note">ملاحظة</option></select></div>
-          <div class="field"><label for="postTitle" id="titleLabel">العنوان</label><input type="text" id="postTitle" /></div>
-          <div class="field"><label for="postContent" id="contentLabel">المحتوى</label><textarea id="postContent"></textarea></div>
-          <div class="helper" id="editorHelper">يتم حفظ المنشورات داخل المتصفح في هذه النسخة.</div>
-          <div class="toolbar"><button class="btn btn-primary" onclick="addPost()" id="publishBtn">نشر الآن</button><button class="btn btn-light" onclick="clearEditor()" id="clearBtn">مسح الحقول</button></div>
-        </div>
-        <div class="panel">
-          <h3 id="feedTitle">المنشورات المعروضة</h3>
-          <div id="postsContainer" class="posts-wrap"></div>
-        </div>
-      </div>
-    </div>
-  </main>
-  <footer><div class="container" id="footerText">جميع الحقوق محفوظة © Technology Lab</div></footer>
-  <script>
-function addPost() {
-  const type = document.getElementById("postType").value;
-  const title = document.getElementById("postTitle").value.trim();
-  const content = document.getElementById("postContent").value.trim();
-  const postsList = document.getElementById("postsList");
 
-  if (!title || !content) {
-    alert("يرجى كتابة العنوان والمحتوى");
-    return;
+  <style>
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background:#fffaf5;
+      color:#142033;
+    }
+
+    header{
+      background:#fff;
+      border-bottom:1px solid #f1dfcf;
+      padding:12px 7%;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logo-box{
+      background:#ff9438;
+      color:#fff;
+      font-weight:bold;
+      padding:16px;
+      border-radius:16px;
+    }
+
+    nav a{
+      text-decoration:none;
+      color:#263447;
+      margin:0 18px;
+      font-weight:bold;
+    }
+
+    nav a.active{
+      background:#fff0e5;
+      color:#d85f00;
+      padding:12px 18px;
+      border-radius:14px;
+    }
+
+    main{
+      padding:30px 7%;
+    }
+
+    h1{
+      font-size:34px;
+      margin-bottom:5px;
+    }
+
+    .subtitle{
+      color:#667085;
+      font-size:18px;
+      margin-bottom:28px;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid #ead8c8;
+      border-radius:22px;
+      padding:28px;
+      box-shadow:0 20px 45px rgba(0,0,0,0.04);
+      min-height:560px;
+    }
+
+    label{
+      display:block;
+      font-weight:bold;
+      margin:18px 0 8px;
+    }
+
+    input, textarea, select{
+      width:100%;
+      box-sizing:border-box;
+      border:1px solid #ead8c8;
+      border-radius:14px;
+      padding:14px;
+      font-size:17px;
+      background:#fffdfb;
+      color:#142033;
+    }
+
+    textarea{
+      height:170px;
+      resize:vertical;
+    }
+
+    .buttons{
+      display:flex;
+      gap:12px;
+      margin-top:20px;
+    }
+
+    button{
+      border:none;
+      border-radius:14px;
+      padding:13px 22px;
+      cursor:pointer;
+      font-size:16px;
+      font-weight:bold;
+    }
+
+    .publish{
+      background:#ff9438;
+      color:white;
+    }
+
+    .clear{
+      background:white;
+      color:#d85f00;
+      border:1px solid #ffc99e;
+    }
+
+    .post{
+      border:1px solid #ead8c8;
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:16px;
+      background:#fffaf5;
+      position:relative;
+    }
+
+    .post small{
+      color:#d85f00;
+      font-weight:bold;
+    }
+
+    .post h3{
+      margin:10px 0;
+    }
+
+    .delete-btn{
+      position:absolute;
+      top:12px;
+      left:12px;
+      background:#e74c3c;
+      color:white;
+      padding:7px 12px;
+      border-radius:10px;
+      font-size:14px;
+    }
+
+    .empty{
+      color:#667085;
+      margin-top:30px;
+      text-align:center;
+    }
+
+    @media(max-width:900px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      header{
+        flex-direction:column;
+        gap:15px;
+      }
+
+      nav a{
+        margin:6px;
+        display:inline-block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <button class="clear" onclick="history.back()">رجوع</button>
+
+  <nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="services.html">الخدمات</a>
+    <a href="programs.html">البرامج</a>
+    <a href="ideas.html" class="active">الأفكار</a>
+    <a href="contact.html">التواصل</a>
+  </nav>
+
+  <div class="logo">
+    <div>
+      <h2 style="margin:0;">Technology Lab</h2>
+      <p style="margin:0;color:#667085;">منصة للأفكار والبرامج والمنتجات</p>
+    </div>
+    <div class="logo-box">TL</div>
+  </div>
+</header>
+
+<main>
+  <h1>منشورات الأفكار</h1>
+  <p class="subtitle">اكتب أفكارك وملاحظاتك وبرامجك المستقبلية هنا.</p>
+
+  <div class="layout">
+
+    <section class="card">
+      <h2>المنشورات المعروضة</h2>
+      <div id="postsList">
+        <p class="empty" id="emptyMsg">لا توجد منشورات حالياً.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>إضافة منشور جديد</h2>
+
+      <label>نوع المنشور</label>
+      <select id="postType">
+        <option>فكرة</option>
+        <option>ملاحظة</option>
+        <option>برنامج مستقبلي</option>
+        <option>تطوير موقع</option>
+      </select>
+
+      <label>العنوان</label>
+      <input id="postTitle" type="text" placeholder="اكتب عنوان المنشور">
+
+      <label>المحتوى</label>
+      <textarea id="postContent" placeholder="اكتب تفاصيل الفكرة أو الملاحظة"></textarea>
+
+      <p style="color:#667085;">يتم حفظ المنشورات داخل المتصفح في هذه النسخة.</p>
+
+      <div class="buttons">
+        <button class="publish" onclick="addPost()">نشر الآن</button>
+        <button class="clear" onclick="clearForm()">مسح الحقل</button>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script>
+  let posts = JSON.parse(localStorage.getItem("technologyLabPosts")) || [];
+
+  function savePosts(){
+    localStorage.setItem("technologyLabPosts", JSON.stringify(posts));
   }
 
-  const post = document.createElement("div");
-  post.style.cssText = `
-    border:1px solid #ead8c8;
-    border-radius:16px;
-    padding:18px;
-    margin-bottom:15px;
-    background:#fffaf5;
-    text-align:right;
-  `;
+  function renderPosts(){
+    const postsList = document.getElementById("postsList");
+    postsList.innerHTML = "";
 
-  post.innerHTML = `
-    <small style="color:#d35400;font-weight:bold;">${type}</small>
-    <h3>${title}</h3>
-    <p>${content}</p>
-  `;
+    if(posts.length === 0){
+      postsList.innerHTML = '<p class="empty" id="emptyMsg">لا توجد منشورات حالياً.</p>';
+      return;
+    }
 
-  postsList.prepend(post);
+    posts.forEach((post, index) => {
+      const item = document.createElement("div");
+      item.className = "post";
 
-  document.getElementById("postTitle").value = "";
-  document.getElementById("postContent").value = "";
-}
+      item.innerHTML = `
+        <button class="delete-btn" onclick="deletePost(${index})">حذف</button>
+        <small>${post.type}</small>
+        <h3>${post.title}</h3>
+        <p>${post.content}</p>
+        <small>${post.date}</small>
+      `;
+
+      postsList.appendChild(item);
+    });
+  }
+
+  function addPost(){
+    const type = document.getElementById("postType").value;
+    const title = document.getElementById("postTitle").value.trim();
+    const content = document.getElementById("postContent").value.trim();
+
+    if(!title || !content){
+      alert("يرجى كتابة العنوان والمحتوى");
+      return;
+    }
+
+    const now = new Date();
+    const date =
+      String(now.getDate()).padStart(2,"0") + "/" +
+      String(now.getMonth()+1).padStart(2,"0") + "/" +
+      now.getFullYear();
+
+    posts.unshift({
+      type:type,
+      title:title,
+      content:content,
+      date:date
+    });
+
+    savePosts();
+    renderPosts();
+    clearForm();
+  }
+
+  function deletePost(index){
+    if(confirm("هل تريد حذف هذا المنشور؟")){
+      posts.splice(index, 1);
+      savePosts();
+      renderPosts();
+    }
+  }
+
+  function clearForm(){
+    document.getElementById("postTitle").value = "";
+    document.getElementById("postContent").value = "";
+  }
+
+  renderPosts();
 </script>
+
 </body>
 </html>
